@@ -12,7 +12,7 @@
 1. Maven library dependency
 ``` groovy
 dependencies {
-    implementation 'io.github.litao0621:nifty-slider:(latest version)'
+    implementation 'com.github.irvingazheng:nifty-slider:(latest version)'
     // Added effect for Sliders (Optional Features)
     implementation 'io.github.litao0621:nifty-slider-effect:(latest version)'
 }
