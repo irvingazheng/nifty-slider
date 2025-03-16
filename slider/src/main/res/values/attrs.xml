@@ -69,5 +69,9 @@
             <enum name="disableTouch" value="1"/>
             <enum name="disableClickTouch" value="2"/>
         </attr>
+        <attr name="niftyLabelBehavior">
+            <enum name="normal" value="0" />
+            <enum name="alwaysVisible" value="1"/>
+        </attr>
     </declare-styleable>
 </resources>

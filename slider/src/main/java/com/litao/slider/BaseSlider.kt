@@ -28,6 +28,7 @@ import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.withTranslation
 import androidx.core.math.MathUtils
+import androidx.core.view.isVisible
 import androidx.interpolator.view.animation.LinearOutSlowInInterpolator
 import com.litao.slider.anim.ThumbValueAnimation
 import com.litao.slider.anim.TipViewAnimator
@@ -175,6 +176,8 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
 
     private var sliderTouchMode = MODE_NORMAL
 
+    private var labelBehavior = LABEL_BEHAVIOR_NORMAL
+
     companion object {
         var DEBUG_MODE = false
 
@@ -192,7 +195,8 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
         const val HORIZONTAL: Int = 0
         const val VERTICAL: Int = 1
 
-
+        private const val LABEL_BEHAVIOR_NORMAL = 0
+        private const val LABEL_BEHAVIOR_ALWAYS_VISIBLE = 1
 
     }
 
@@ -392,6 +396,12 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
             setTipTextAutoChange(getBoolean(R.styleable.NiftySlider_tipTextAutoChange, true))
             setTipViewClippingEnabled(getBoolean(R.styleable.NiftySlider_isTipViewClippingEnabled, false))
             setTouchMode(getInt(R.styleable.NiftySlider_sliderTouchMode, MODE_NORMAL))
+
+            labelBehavior = getInt(R.styleable.NiftySlider_niftyLabelBehavior, LABEL_BEHAVIOR_NORMAL)
+            tipView.isVisible = when (labelBehavior) {
+                LABEL_BEHAVIOR_ALWAYS_VISIBLE -> true
+                else -> false
+            }
         }
     }
 
@@ -1552,6 +1562,10 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
      */
     fun addCustomTipView(view: View) {
         tipView.customTipView = view
+        if (labelBehavior == LABEL_BEHAVIOR_ALWAYS_VISIBLE) {
+            tipView.attachTipView(this)
+            tipView.show()
+        }
     }
 
     /**
@@ -1774,7 +1788,9 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
             onStopTacking()
         }
         isTackingStart = false
-        tipView.hide()
+        if(labelBehavior == LABEL_BEHAVIOR_NORMAL) {
+            tipView.hide()
+        }
         invalidate()
     }
 
