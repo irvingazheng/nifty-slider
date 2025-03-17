@@ -506,9 +506,9 @@ abstract class BaseSlider constructor(context: Context, attrs: AttributeSet? = n
     }
 
     override fun onDetachedFromWindow() {
-        if (Utils.isActivityAlive(context)) {
-            tipView.detachTipView(this)
-        }
+//        if (Utils.isActivityAlive(context)) {
+//            tipView.detachTipView(this)
+//        }
         super.onDetachedFromWindow()
     }
 
