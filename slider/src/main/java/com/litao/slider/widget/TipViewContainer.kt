@@ -95,7 +95,13 @@ class TipViewContainer @JvmOverloads constructor(
         contentView?.let {
             val tipView = it.findViewById<TipViewContainer>(currentViewId)
             if (tipView == null) {
-                it.addView(this)
+                val parentView = parent as? ViewGroup
+                if (parentView != null && parentView != it) {
+                    parentView.removeView(this)
+                }
+                if (this.parent == null) {
+                    it.addView(this)
+                }
             }
             isAttached = true
             windowWidth = Utils.getWindowWidth(context)
